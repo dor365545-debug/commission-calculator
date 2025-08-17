@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מחשבון המרה</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    input, select, button {
+      width: 90%;
+      max-width: 300px;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <h1>מחשבון המרה - דירהם לש"ח</h1>
+  <input type="number" id="amount" placeholder="הכנס סכום בדירהם">
+  <button onclick="convert()">המר</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    // שער יציג - נכון להיום (תעדכן ידנית לפי הצורך)
+    const rate = 1.00; // כאן תכניס את השער המדויק של דירהם לש"ח
+
+    function convert() {
+      const amount = document.getElementById("amount").value;
+      if (!amount || amount <= 0) {
+        document.getElementById("result").innerText = "אנא הכנס סכום חוקי";
+        return;
+      }
+      const result = (amount * rate).toFixed(2);
+      document.getElementById("result").innerText =
+        amount + " דירהם = " + result + " ₪";
+    }
+  </script>
+</body>
+</html>
