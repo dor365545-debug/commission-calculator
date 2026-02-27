@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>הצהרת בריאות דיגיטלית</title>
+    <style>
+      :root {
+        --primary: #162891;
+        --primary-dark: #0f1d6f;
+        --border: #d8dbe7;
+        --text: #1f2a44;
+        --muted: #6b7380;
+        --bg: #f6f8fc;
+        --card: #ffffff;
+        --success-bg: #edfdf3;
+        --success-border: #86efac;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        -webkit-text-size-adjust: 100%;
+      }
+
+      .page {
+        max-width: 940px;
+        margin: 0 auto;
+        padding: 36px 18px 70px;
+      }
+
+      header { text-align: center; margin-bottom: 24px; }
+      h1 { font-size: 30px; margin: 0 0 8px; }
+      .subtitle { color: var(--muted); margin: 0; }
+
+      .card {
+        background: var(--card);
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+      }
+
+      .config-box {
+        border: 1px dashed var(--border);
+        background: #fafbff;
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 22px;
+      }
+
+      .config-box p { margin: 0 0 8px; color: var(--muted); font-size: 14px; }
+
+      .question {
+        border-bottom: 1px solid var(--border);
+        padding: 22px 0;
+      }
+
+      .question:last-child { border-bottom: none; }
+      .question-title { font-weight: 700; margin-bottom: 14px; }
+
+      .button-group {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 180px));
+        gap: 10px;
+      }
+
+      .button-group input { display: none; }
+
+      .button-group label {
+        min-height: 46px;
+        padding: 11px 16px;
+        text-align: center;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        cursor: pointer;
+        font-weight: 600;
+        background: #f0f2f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .button-group input:checked + label {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(22, 40, 145, 0.25);
+      }
+
+      .followup {
+        margin-top: 14px;
+        border: 1px solid #dbe2ff;
+        background: #f4f7ff;
+        border-radius: 12px;
+        padding: 14px;
+      }
+
+      .hidden { display: none; }
+
+      .checkbox-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      textarea,
+      input[type="text"],
+      input[type="url"] {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 11px;
+        font: inherit;
+      }
+
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+      }
+
+      textarea { min-height: 74px; resize: vertical; }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 26px;
+      }
+
+      button {
+        border: none;
+        border-radius: 999px;
+        min-height: 46px;
+        padding: 11px 24px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .primary { background: var(--primary); color: #fff; }
+      .primary:hover { background: var(--primary-dark); }
+      .secondary { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+
+      .tip { color: var(--muted); font-size: 13px; text-align: center; margin-top: 10px; }
+
+      .summary {
+        margin-top: 20px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: #fff;
+        padding: 14px;
+      }
+
+      .summary pre { margin: 0; white-space: pre-wrap; font: inherit; font-size: 14px; }
+
+      .status {
+        margin-top: 18px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid var(--success-border);
+        background: var(--success-bg);
+        font-size: 14px;
+      }
+
+      .status.error {
+        border-color: #fecaca;
+        background: #fff1f2;
+      }
+
+      @media (max-width: 700px) {
+        .page {
+          padding: 16px 10px 30px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+
+        .card {
+          border-radius: 14px;
+          padding: 16px;
+        }
+
+        .question {
+          padding: 16px 0;
+        }
+
+        .button-group {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .actions {
+          position: sticky;
+          bottom: 8px;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(5px);
+          border: 1px solid var(--border);
+          border-radius: 12px;
+          padding: 8px;
+          z-index: 10;
+        }
+
+        .actions button {
+          flex: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>הצהרת בריאות דיגיטלית</h1>
+        <p class="subtitle">טופס ללקוח עם שאלות כן/לא, ענפי המשך אוטומטיים, ושליחה בסיום המילוי.</p>
+      </header>
+
+      <form id="health-form" class="card">
+        <div class="config-box">
+          <strong>חיבור לשליחה אמיתית:</strong>
+          <p>הדביקו כאן כתובת Webhook (למשל Formspree / Make / Zapier) כדי לקבל את הנתונים אוטומטית לאחר שליחה.</p>
+          <p>טיפ לאייפון/אייפד: לחיצה ארוכה בשדה תאפשר הדבקה מהירה של הקישור.</p>
+          <label for="webhook-url">כתובת Webhook:</label>
+          <input id="webhook-url" name="webhook-url" type="url" placeholder="https://example.com/webhook" />
+        </div>
+
+        <div class="question" data-question="q1">
+          <div class="question-title">1) האם מטרת הנסיעה כוללת טיפול רפואי/אסתטי?</div>
+          <div class="button-group">
+            <input id="q1-no" type="radio" name="q1" value="לא" /><label for="q1-no">לא</label>
+            <input id="q1-yes" type="radio" name="q1" value="כן" /><label for="q1-yes">כן</label>
+          </div>
+          <div class="followup hidden" data-followup="q1">
+            <label for="q1-details">פרטי הטיפול והמיקום:</label>
+            <textarea id="q1-details" name="q1-details"></textarea>
+          </div>
+        </div>
+
+        <div class="question" data-question="q2">
+          <div class="question-title">2) האם היה ניתוח/אשפוז/פניה למיון ב-3 החודשים האחרונים?</div>
+          <div class="button-group">
+            <input id="q2-no" type="radio" name="q2" value="לא" /><label for="q2-no">לא</label>
+            <input id="q2-yes" type="radio" name="q2" value="כן" /><label for="q2-yes">כן</label>
+          </div>
+          <div class="followup hidden" data-followup="q2">
+            <label for="q2-details">מי מהנוסעים ומה הייתה סיבת הפנייה:</label>
+            <textarea id="q2-details" name="q2-details"></textarea>
+            <div class="followup hidden" data-followup="q2-details-branch">
+              <label for="q2-extra">ענף המשך: האם יש מסמכים רפואיים לצרף (הקלדה חופשית):</label>
+              <textarea id="q2-extra" name="q2-extra"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="question" data-question="q3">
+          <div class="question-title">3) האם יש שימוש קבוע בתרופות?</div>
+          <div class="button-group">
+            <input id="q3-no" type="radio" name="q3" value="לא" /><label for="q3-no">לא</label>
+            <input id="q3-yes" type="radio" name="q3" value="כן" /><label for="q3-yes">כן</label>
+          </div>
+          <div class="followup hidden" data-followup="q3">
+            <div class="checkbox-grid">
+              <label><input type="checkbox" name="q3-person" value="נוסע 1" /> נוסע 1</label>
+              <label><input type="checkbox" name="q3-person" value="נוסע 2" /> נוסע 2</label>
+              <label><input type="checkbox" name="q3-person" value="נוסע 3" /> נוסע 3</label>
+            </div>
+            <label for="q3-details">פירוט תרופות ומינון:</label>
+            <textarea id="q3-details" name="q3-details"></textarea>
+          </div>
+        </div>
+
+        <div class="question" data-question="q4">
+          <div class="question-title">4) האם יש בעיות בריאות ידועות?</div>
+          <div class="button-group">
+            <input id="q4-no" type="radio" name="q4" value="לא" /><label for="q4-no">לא</label>
+            <input id="q4-yes" type="radio" name="q4" value="כן" /><label for="q4-yes">כן</label>
+          </div>
+          <div class="followup hidden" data-followup="q4">
+            <div class="checkbox-grid">
+              <label><input type="checkbox" name="q4-condition" value="מחלת לב" /> מחלת לב</label>
+              <label><input type="checkbox" name="q4-condition" value="סוכרת" /> סוכרת</label>
+              <label><input type="checkbox" name="q4-condition" value="אסתמה" /> אסתמה</label>
+              <label><input type="checkbox" name="q4-condition" value="אחר" /> אחר</label>
+            </div>
+            <label for="q4-details">פירוט חופשי:</label>
+            <textarea id="q4-details" name="q4-details"></textarea>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="secondary" type="reset">ניקוי טופס</button>
+          <button class="primary" type="submit">שליחת ההצהרה</button>
+        </div>
+
+        <div class="tip">אחרי השליחה יוצג סיכום, ואם הוגדר webhook הנתונים יישלחו אוטומטית.</div>
+        <div class="status hidden" id="status-box"></div>
+        <div class="summary hidden" id="summary"><pre id="summary-output"></pre></div>
+      </form>
+    </div>
+
+    <script>
+      const form = document.getElementById("health-form");
+      const summary = document.getElementById("summary");
+      const summaryOutput = document.getElementById("summary-output");
+      const statusBox = document.getElementById("status-box");
+      const followupMap = new Map();
+
+      document.querySelectorAll(".followup[data-followup]").forEach((section) => {
+        followupMap.set(section.dataset.followup, section);
+      });
+
+      function toggleFollowup(name, isYes) {
+        const followup = followupMap.get(name);
+        if (!followup) return;
+        followup.classList.toggle("hidden", !isYes);
+      }
+
+      function showStatus(message, isError = false) {
+        statusBox.textContent = message;
+        statusBox.classList.remove("hidden");
+        statusBox.classList.toggle("error", isError);
+      }
+
+      function hideStatus() {
+        statusBox.classList.add("hidden");
+        statusBox.classList.remove("error");
+        statusBox.textContent = "";
+      }
+
+      document.querySelectorAll("input[type='radio']").forEach((radio) => {
+        radio.addEventListener("change", (event) => {
+          toggleFollowup(event.target.name, event.target.value === "כן");
+        });
+      });
+
+      document.getElementById("q2-details").addEventListener("input", (event) => {
+        const nested = followupMap.get("q2-details-branch");
+        nested.classList.toggle("hidden", event.target.value.trim().length < 4);
+      });
+
+      form.addEventListener("reset", () => {
+        summary.classList.add("hidden");
+        summaryOutput.textContent = "";
+        hideStatus();
+        document.querySelectorAll(".followup").forEach((item) => item.classList.add("hidden"));
+      });
+
+      function buildSummary(data) {
+        const lines = [];
+        const push = (label, value) => {
+          if (value && value.toString().trim()) lines.push(`${label}: ${value}`);
+        };
+
+        push("שאלה 1", data.get("q1"));
+        push("פרטי טיפול", data.get("q1-details"));
+        push("שאלה 2", data.get("q2"));
+        push("פירוט פנייה רפואית", data.get("q2-details"));
+        push("מסמכים רפואיים", data.get("q2-extra"));
+        push("שאלה 3", data.get("q3"));
+        const meds = data.getAll("q3-person");
+        if (meds.length) lines.push(`נוסעים עם תרופות: ${meds.join(", ")}`);
+        push("תרופות ומינון", data.get("q3-details"));
+        push("שאלה 4", data.get("q4"));
+        const conditions = data.getAll("q4-condition");
+        if (conditions.length) lines.push(`בעיות בריאות: ${conditions.join(", ")}`);
+        push("פירוט רפואי", data.get("q4-details"));
+
+        return lines.length ? lines.join("\n") : "לא מולא מידע בטופס.";
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        hideStatus();
+
+        const data = new FormData(form);
+        const summaryText = buildSummary(data);
+        summaryOutput.textContent = summaryText;
+        summary.classList.remove("hidden");
+
+        const webhookUrl = (data.get("webhook-url") || "").toString().trim();
+        if (!webhookUrl) {
+          showStatus("הטופס נשמר ומוצג למטה. כדי לקבל אותו אליך אוטומטית יש להזין כתובת webhook.");
+          return;
+        }
+
+        const payload = {
+          submittedAt: new Date().toISOString(),
+          summary: summaryText,
+          answers: Object.fromEntries(data.entries()),
+          multiSelect: {
+            q3People: data.getAll("q3-person"),
+            q4Conditions: data.getAll("q4-condition")
+          }
+        };
+
+        try {
+          const response = await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error(`Webhook returned status ${response.status}`);
+          }
+
+          showStatus("השליחה בוצעה בהצלחה והנתונים נשלחו ליעד שהגדרת.");
+        } catch (error) {
+          showStatus(`השליחה נכשלה: ${error.message}. ניתן להעתיק בינתיים את הסיכום שמופיע למטה.`, true);
+        }
+      });
+    </script>
+  </body>
+</html>
