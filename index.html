@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>מחשבון הפניקס Travel Smart</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="card">
+        <h1>מחשבון הפניקס Travel Smart</h1>
+        <p class="subtitle">מחשבון סטטי להערכת מחיר ביטוח נסיעות (דמו) — מותאם מובייל ו-RTL.</p>
+
+        <form id="calculatorForm" novalidate>
+          <div class="grid two">
+            <div class="field">
+              <label for="departureDate">תאריך יציאה</label>
+              <input id="departureDate" type="date" required />
+            </div>
+            <div class="field">
+              <label for="returnDate">תאריך חזרה</label>
+              <input id="returnDate" type="date" required />
+            </div>
+          </div>
+
+          <div class="grid two">
+            <div class="field">
+              <label for="age">גיל</label>
+              <input id="age" type="number" min="0" step="1" placeholder="לדוגמה: 34" required />
+            </div>
+            <div class="field">
+              <label for="destination">יעד</label>
+              <select id="destination" required>
+                <option value="europe">אירופה/שאר העולם</option>
+                <option value="america">אמריקה/נפאל</option>
+              </select>
+            </div>
+          </div>
+
+          <fieldset class="field">
+            <legend>הרחבות</legend>
+            <div class="addons">
+              <label><input type="checkbox" value="luggage" /> כבודה (0.5$ ליום)</label>
+              <label><input type="checkbox" value="tripCancel" /> ביטול/קיצור נסיעה</label>
+              <label><input type="checkbox" value="extremeSport" /> ספורט אתגרי (0.5$ ליום)</label>
+              <label><input type="checkbox" value="winterSport" /> ספורט חורף (10$ ליום)</label>
+              <label><input type="checkbox" value="competitiveSport" /> ספורט תחרותי (25$ לכל התקופה)</label>
+              <label><input type="checkbox" value="phoneTheft" /> גניבת טלפון (1$ ליום)</label>
+              <label><input type="checkbox" value="cameraTheft" /> גניבת מצלמה (1$ ליום)</label>
+              <label><input type="checkbox" value="laptopTheft" /> גניבת מחשב/טאבלט (0.8$ ליום)</label>
+              <label><input type="checkbox" value="preExisting" /> מצב רפואי קודם</label>
+              <label><input id="pregnancy" type="checkbox" value="pregnancy" /> הריון (18-46: 4$ ליום)</label>
+            </div>
+          </fieldset>
+
+          <button class="btn" type="submit">חשב מחיר</button>
+          <p id="messageBox" class="message" aria-live="polite"></p>
+        </form>
+
+        <section id="resultBox" class="result hidden" aria-live="polite">
+          <h2>תוצאה</h2>
+          <ul id="resultLines" class="result-lines"></ul>
+          <button id="copyBtn" class="btn secondary" type="button">העתק פירוט</button>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
